@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { authUser } from '../../data/db'
+import { authUserPersist as authUser } from '../../data/db'
 
 export default function Login({ onSuccess, role }){
   const [email, setEmail] = useState('')

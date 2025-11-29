@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { addUser, authUser } from '../../data/db'
+import { addUser, authUserPersist as authUser } from '../../data/db'
 
 export default function Signup({ onSuccess, role }){
   const [name, setName] = useState('')

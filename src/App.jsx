@@ -3,13 +3,14 @@ import Home from './components/Home'
 import Resources from './components/Resources'
 import Mental from './components/MentalHealth'
 import Dashboard from './components/Dashboard'
+const Feedback = lazy(()=> import('./components/Feedback'))
 const Admin = lazy(()=> import('./components/AdminPanel'))
 const Profile = lazy(()=> import('./components/Profile'))
 // Login and Signup are used inside Entry; no direct import needed here
 import Entry from './components/Entry'
 import { getResources, getCurrentUser, logout } from './data/db'
 
-const VIEWS = { HOME: 'home', RES: 'resources', MENTAL: 'mental', DASH: 'dashboard', ADMIN: 'admin', PROFILE: 'profile' }
+const VIEWS = { HOME: 'home', RES: 'resources', MENTAL: 'mental', DASH: 'dashboard', ADMIN: 'admin', PROFILE: 'profile', FEEDBACK: 'feedback' }
 
 export default function App() {
   const [view, setView] = useState('entry')
@@ -36,6 +37,7 @@ export default function App() {
           <button onClick={() => setView(VIEWS.RES)}>Resources</button>
           <button onClick={() => setView(VIEWS.MENTAL)}>Mental Health</button>
           <button onClick={() => setView(VIEWS.DASH)}>Dashboard</button>
+          <button onClick={() => setView(VIEWS.FEEDBACK)}>Feedback</button>
           {user && user.role === 'admin' && (
             <button onClick={() => setView(VIEWS.ADMIN)}>Admin</button>
           )}
@@ -71,6 +73,11 @@ export default function App() {
               <button onClick={() => setView('login')}>Login</button>
             </div>
           )
+        )}
+        {view === VIEWS.FEEDBACK && (
+          <Suspense fallback={<div>Loading feedback...</div>}>
+            <Feedback />
+          </Suspense>
         )}
         {view === VIEWS.ADMIN && (
           user && user.role === 'admin' ? (
